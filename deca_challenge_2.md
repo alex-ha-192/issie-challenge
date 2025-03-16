@@ -16,6 +16,10 @@ My testing shows that this component works for signed multiplication as well as 
 
 Note that only 3 adders are used in the initial block. The final adder is used within the ALU to save on a general-purpose register for the final block of 4 bits; we can add straight into a register that already has a saved value on the final cycle of multiplication to save both the use of a general-purpose register (e.g. for subroutines) and an additional cycle at the end of execution.
 
-test_16bit.txt contains an unoptimised test of signed multiplication; changing MOV R3, R0, R4 to MOV R2, R0, R5 would allow for the removal of ADD R0, R3 at the end of the program and free up R3 for general use.
+test_16bit.txt contains an unoptimised test of signed multiplication; changing ```MOV R3, R0, R4``` to ```MOV R2, R0, R5``` would allow for the removal of ADD R0, R3 at the end of the program and free up R3 for general use.
 
 The test_16bit files inside the ISSIE project folder are not necessarily optimal, as I changed the .ram file for debugging purposes.
+
+This implementation can achieve register multiplication in 7 cycles (one to initialise the registers, 4 for computing the multiplication, and 2 for adding together the remaining additions), which is faster than the naive conversion of the C program.
+
+Now, onto discussing how to convert this to a 32-bit output. First, we would need to place a register on the output to capture the MS 16 bits of a 32-bit output and save the output of the multiplier component over two cycles. Inside the component, we would need either complex cross-register addition or larger adder blocks (this could be optimised by using 20, 24 and 28 bit adder blocks for each subsequent addition to save on full adders). Outside the component, we would need to use the 3-cycle 32-bit addition covered in class with shifts for each extra addition, and the final-addition-register-trick in the 16-bit ALU would not work. This would not be achievable with this approach within the confines of this challenge, and would take much longer (probably around 14 cycles longer at least) and would require either extra delay or more full adders inside the NEWMULT block.
