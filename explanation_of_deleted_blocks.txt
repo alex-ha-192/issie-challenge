@@ -1,0 +1,1 @@
+I originally thought the limit was 64 adder *blocks*, not full adders, so the deleted_blocks.zip includes the blocks I created to that mistaken requirement. It includes some accelerated multiplication instructions.
