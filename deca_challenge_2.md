@@ -17,3 +17,5 @@ My testing shows that this component works for signed multiplication as well as 
 Note that only 3 adders are used in the initial block. The final adder is used within the ALU to save on a general-purpose register for the final block of 4 bits; we can add straight into a register that already has a saved value on the final cycle of multiplication to save both the use of a general-purpose register (e.g. for subroutines) and an additional cycle at the end of execution.
 
 test_16bit.txt contains an unoptimised test of signed multiplication; changing MOV R3, R0, R4 to MOV R2, R0, R5 would allow for the removal of ADD R0, R3 at the end of the program and free up R3 for general use.
+
+The test_16bit files inside the ISSIE project folder are not necessarily optimal, as I changed the .ram file for debugging purposes.
